@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Tablaamortizacion {
+    public static void main(String[] args) {
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.print("Ingrese monto del prestamo: ");
+        double prestamo = entrada.nextDouble();
+
+        System.out.print("Tasa de interes mensual (%): ");
+        double tasaInteres = entrada.nextDouble();
+
+        System.out.print("Pago mensual fijo: ");
+        double pago = entrada.nextDouble();
+
+        int mes = 0;
+        double saldo = prestamo;
+
+        System.out.println("Mes\tInterés\tAbono Capital\tSaldo");
+
+        while (saldo > 0)
+        {
+            mes++;
+            double interesDelMes = saldo * (tasaInteres / 100);
+            double abonoAcapital = pago - interesDelMes;
+
+            if (abonoAcapital < 0)
+            {
+                System.out.println("El pago mensual no cubre los intereses, ajustar el pago.");
+                break;
+            }
+
+            saldo -= abonoAcapital;
+            if (saldo < 0) saldo = 0;
+
+            System.out.printf("%d\t%.2f\t%.2f\t\t%.2f\n", mes, interesDelMes, abonoAcapital, saldo);
+        }
+
+        entrada.close();
+    }
+}
